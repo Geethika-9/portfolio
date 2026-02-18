@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .balance {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .balance h2 {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .balance .amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .summary-item {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .income {
+            background: #d4edda;
+        }
+
+        .expense {
+            background: #f8d7da;
+        }
+
+        .summary-item h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .summary-item p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .income p {
+            color: #28a745;
+        }
+
+        .expense p {
+            color: #dc3545;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        .transactions {
+            margin-top: 30px;
+        }
+
+        .transactions h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .transaction-list {
+            list-style: none;
+        }
+
+        .transaction-item {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid;
+        }
+
+        .transaction-item.income {
+            border-color: #28a745;
+        }
+
+        .transaction-item.expense {
+            border-color: #dc3545;
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .transaction-item.income .transaction-amount {
+            color: #28a745;
+        }
+
+        .transaction-item.expense .transaction-amount {
+            color: #dc3545;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Tracker</h1>
+
+        <div class="balance">
+            <h2>Total Balance</h2>
+            <div class="amount" id="balance">₹0.00</div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-item income">
+                <h3>Income</h3>
+                <p id="income">₹0.00</p>
+            </div>
+            <div class="summary-item expense">
+                <h3>Expense</h3>
+                <p id="expense">₹0.00</p>
+            </div>
+        </div>
+
+        <form id="transactionForm">
+            <div class="form-group">
+                <input type="text" id="description" placeholder="Description" required>
+            </div>
+            <div class="form-group">
+                <input type="number" id="amount" placeholder="Amount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <select id="type" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <button type="submit">Add Transaction</button>
+        </form>
+
+        <div class="transactions">
+            <h2>Transaction History</h2>
+            <ul class="transaction-list" id="transactionList"></ul>
+        </div>
+    </div>
+
+    <script>
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+        function updateUI() {
+            const income = transactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const expense = transactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            const balance = income - expense;
+
+            document.getElementById('balance').textContent = `₹${balance.toFixed(2)}`;
+            document.getElementById('income').textContent = `₹${income.toFixed(2)}`;
+            document.getElementById('expense').textContent = `₹${expense.toFixed(2)}`;
+
+            const list = document.getElementById('transactionList');
+            list.innerHTML = '';
+
+            transactions.forEach((transaction, index) => {
+                const li = document.createElement('li');
+                li.className = `transaction-item ${transaction.type}`;
+                li.innerHTML = `
+                    <div class="transaction-details">
+                        <div class="transaction-name">${transaction.description}</div>
+                    </div>
+                    <span class="transaction-amount">${transaction.type === 'income' ? '+' : '-'}₹${transaction.amount.toFixed(2)}</span>
+                    <button class="delete-btn" onclick="deleteTransaction(${index})">Delete</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        document.getElementById('transactionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const description = document.getElementById('description').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const type = document.getElementById('type').value;
+
+            transactions.push({ description, amount, type });
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            document.getElementById('transactionForm').reset();
+            updateUI();
+        });
+
+        function deleteTransaction(index) {
+            transactions.splice(index, 1);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            updateUI();
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
