@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding-bottom: 80px;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: slideDown 1s;
+        }
+
+        header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            padding: 40px;
+            margin: 30px 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .skills ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skills li {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .skills li:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            nav a {
+                margin: 0 10px;
+                font-size: 14px;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>R. Geethika</h1>
+        <p>Web Developer | Student | Programmer</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p style="font-size: 18px; line-height: 1.8; color: #666;">
+                Hello! I am a passionate web developer interested in building
+                responsive and user-friendly websites. I enjoy learning new
+                technologies and improving my skills. With a strong foundation
+                in both frontend and backend development, I strive to create
+                innovative solutions that make a difference.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>Java</li>
+                <li>React</li>
+                <li>Node.js</li>
+                <li>Git</li>
+            </ul>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <h3>📱 Portfolio Website</h3>
+                    <p>A modern personal portfolio built using HTML, CSS, and JavaScript with responsive design and smooth animations.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🎓 Student Management System</h3>
+                    <p>A comprehensive project for managing student data with features like attendance tracking and grade management.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🛒 E-Commerce Platform</h3>
+                    <p>An online shopping platform with cart functionality, payment integration, and user authentication.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span style="font-size: 24px;">📧</span>
+                    <div>
+                        <strong>Email:</strong><br>
+                        rambhadrageethika@email.com
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span style="font-size: 24px;">📱</span>
+                    <div>
+                        <strong>Phone:</strong><br>
+                        +91-7416496506
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 R.Geethika | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
